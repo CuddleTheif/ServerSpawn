@@ -1,0 +1,10 @@
+main: com.cuddletheif.serverspawn.ServerSpawn
+name: ServerSpawn
+version: 0.1
+api-version: 1.18
+author: CuddleTheif
+commands:
+ serverspawn:
+   aliases: ss
+   description: "Commands for the Server Spawn Plugin"
+   usage: "That is not a command"
