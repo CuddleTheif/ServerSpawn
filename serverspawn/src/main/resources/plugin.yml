@@ -4,7 +4,25 @@ version: 0.1
 api-version: 1.18
 author: CuddleTheif
 commands:
- serverspawn:
-   aliases: ss
-   description: "Commands for the Server Spawn Plugin"
-   usage: "That is not a command"
+ spawn:
+   permission: serverspawn.spawn
+   permission-message: "You do not have permission to use use this command."
+   description: "Teleports the player to spawn"
+   usage: "Only players can tp to set spawn"
+ setspawn:
+   permission: serverspawn.setspawn
+   permission-message: "You do not have permission to use use this command."
+   description: "Sets the spawn for the server, including facing direction"
+   usage: "Only players can set spawns"
+ serverspawnreload:
+   alias: "ssreload"
+   permission: serverspawn.setspawn
+   permission-message: "You do not have permission to use use this command."
+   description: "Reloads the plugin settings from the config file"
+permissions:
+ serverspawn.spawn:
+   description: "Allows you to use the command /spawn"
+   default: true
+ serverspawn.setspawn:
+   description: "Allows you to use the commands /setspawn and /reload"
+   default: op

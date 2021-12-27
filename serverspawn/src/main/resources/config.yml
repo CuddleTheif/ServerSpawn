@@ -1,0 +1,44 @@
+tp-text: '&7Welcome to the spawn!'
+spawn-text: '&7Teleporting to the spawn...'
+no-move: '&4Teleportation cancelled!'
+void-text: ""
+spawn-time: 5
+server-time: 900
+respawn-bed: true
+
+server:
+  world: hub
+  x: -61.5
+  y: 70.0
+  z: 6.5
+  yaw: 180.41762
+  pitch: -0.6275362
+command:
+  world: hub
+  x: -61.5
+  y: 70.0
+  z: 6.5
+  yaw: 180.41762
+  pitch: -0.6275362
+first:
+  world: hub
+  x: -61.5
+  y: 70.0
+  z: 6.5
+  yaw: 180.41762
+  pitch: -0.6275362
+respawn:
+  world: hub
+  x: -61.5
+  y: 70.0
+  z: 6.5
+  yaw: 180.41762
+  pitch: -0.6275362
+void:
+  hub:
+    world: hub
+    x: -61.5
+    y: 70.0
+    z: 6.5
+    yaw: 180.41762
+    pitch: -0.6275362
