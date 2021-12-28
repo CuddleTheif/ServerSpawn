@@ -37,6 +37,9 @@ public class ServerSpawn extends JavaPlugin
     // The text to show when the player teleports from hitting void
     private String voidText;
 
+    // The permission of users that ignore the spawn command cooldown
+    private String spawnCoooldownPerm;
+
     // The amount of time from when the player runs the spawn command to when they actually teleport
     private int spawnCommandTime;
 
@@ -61,7 +64,6 @@ public class ServerSpawn extends JavaPlugin
 
         // Create default config if needed and get the current config
         this.saveDefaultConfig();
-        loadConfig();
 
         // Create the listener for updating spawn points
         this.getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
@@ -71,7 +73,7 @@ public class ServerSpawn extends JavaPlugin
     /**
      * Loads all the settings and the spawn locations from the config
      */
-    private void loadConfig(){
+    public void load(){
 
         FileConfiguration config = this.getConfig();
 
@@ -81,8 +83,9 @@ public class ServerSpawn extends JavaPlugin
         this.noMoveText = config.getString("no-move", null);
         this.voidText = config.getString("void-text", null);
         this.spawnCommandTime = config.getInt("spawn-time", 0);
+        this.spawnCoooldownPerm = config.getString("spawn-cooldown-perm", null);
         this.serverSpawnTime = config.getInt("server-time", 0);
-        this.respawnBedOverride = config.getBoolean("respawn-bed", false);
+        this.respawnBedOverride = config.getBoolean("respawn-bed-override", false);
 
         // Load any spawn locations
         this.serverSpawn= config.getLocation("server");
@@ -95,7 +98,7 @@ public class ServerSpawn extends JavaPlugin
             this.voidSpawns = new HashMap<String, Location>();
             ConfigurationSection locations = config.getConfigurationSection("void");
             for(String world : locations.getValues(false).keySet())
-                this.voidSpawns.putIfAbsent(world, locations.getLocation(world));
+                this.voidSpawns.put(world, locations.getLocation(world));
         }
 
     }
@@ -113,7 +116,7 @@ public class ServerSpawn extends JavaPlugin
             // Reload the config and all values
             this.reloadConfig();
             this.saveDefaultConfig();
-            this.loadConfig();
+            this.load();
 
             // Let the sender know it was reloaded
             sender.sendMessage("ServerSpawn Config reloaded!");
@@ -125,9 +128,6 @@ public class ServerSpawn extends JavaPlugin
         if(!(sender instanceof Player))
             return false;
         Player player = (Player)sender;
-        
-        // Check which command it is
-        this.getLogger().info("RAN COMMAND:"+command.getName());
 
         // If spawn command just tp the player to the set spawn
         if(command.getName().equals("spawn")){
@@ -136,13 +136,15 @@ public class ServerSpawn extends JavaPlugin
             if(this.spawnText!=null)
                 player.sendMessage(this.spawnText);
 
-            // If spawn time is set start the task
-            if(this.spawnCommandTime>0){
+            // If spawn time is set start the task and player doesn't ignore it
+            if((this.spawnCoooldownPerm==null || !player.hasPermission(spawnCoooldownPerm)) && this.spawnCommandTime>0){
 
                 // Run the command after a cooldown
                 BukkitTask spawnCommand = Bukkit.getScheduler().runTaskLater(this, () -> {
                     if(this.tpToCommandSpawn(player) && this.tpText!=null)
                     player.sendMessage(this.tpText);
+                    if(this.noMoveText!=null)
+                        this.spawnCommands.remove(player.getUniqueId());
                 }, this.spawnCommandTime*20);
 
                 // If the command should stop on move save the task for canceling
@@ -344,6 +346,7 @@ public class ServerSpawn extends JavaPlugin
             BukkitTask spawnCommand = spawnCommands.get(player.getUniqueId());
             if(spawnCommand!=null){
                 spawnCommand.cancel();
+                spawnCommands.remove(player.getUniqueId());
                 if(this.noMoveText!="")
                     player.sendMessage(this.noMoveText);
             }

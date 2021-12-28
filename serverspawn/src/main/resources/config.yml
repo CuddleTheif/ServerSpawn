@@ -1,12 +1,12 @@
-tp-text: '&7Welcome to the spawn!'
-spawn-text: '&7Teleporting to the spawn...'
-no-move: '&4Teleportation cancelled!'
-void-text: ""
+tp-text: '§7Welcome to the spawn!'
+spawn-text: '§7Teleporting to the spawn, stand still...'
+no-move: '§4Teleportation cancelled!'
 spawn-time: 5
 server-time: 900
-respawn-bed: true
-
+spawn-cooldown-perm: "serverspawn.cooldown"
+respawn-bed-override: false
 server:
+  ==: org.bukkit.Location
   world: hub
   x: -61.5
   y: 70.0
@@ -14,6 +14,7 @@ server:
   yaw: 180.41762
   pitch: -0.6275362
 command:
+  ==: org.bukkit.Location
   world: hub
   x: -61.5
   y: 70.0
@@ -21,6 +22,7 @@ command:
   yaw: 180.41762
   pitch: -0.6275362
 first:
+  ==: org.bukkit.Location
   world: hub
   x: -61.5
   y: 70.0
@@ -28,6 +30,7 @@ first:
   yaw: 180.41762
   pitch: -0.6275362
 respawn:
+  ==: org.bukkit.Location
   world: hub
   x: -61.5
   y: 70.0
@@ -36,6 +39,7 @@ respawn:
   pitch: -0.6275362
 void:
   hub:
+    ==: org.bukkit.Location
     world: hub
     x: -61.5
     y: 70.0

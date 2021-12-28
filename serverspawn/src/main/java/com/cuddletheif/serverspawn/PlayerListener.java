@@ -10,6 +10,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.server.ServerLoadEvent;
 import org.spigotmc.event.player.PlayerSpawnLocationEvent;
 
 /**
@@ -29,6 +30,15 @@ public class PlayerListener implements Listener{
 
 
     /**
+     * Load the config once the worlds have loaded
+     * @param e the event triggered
+     */
+    @EventHandler
+    public void onServerLoad(ServerLoadEvent e){
+        this.plugin.load();
+    }
+
+    /**
      * When the player spawns into the server redirect them based on their status and the settings
      * @param e The event triggered
      */
@@ -44,7 +54,6 @@ public class PlayerListener implements Listener{
         }
 
         // Check if server spawn and spawn there
-        this.plugin.getLogger().info("SPAWN:"+(System.currentTimeMillis()-e.getPlayer().getLastPlayed()));
         if(this.plugin.shouldServerSpawn(player))
             e.setSpawnLocation(this.plugin.getServerSpawn());
 
@@ -77,7 +86,7 @@ public class PlayerListener implements Listener{
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent e){
 
-        if(this.plugin.shouldCheckMove(e.getPlayer().getUniqueId()) && e.getFrom().distance(e.getTo())>=1)
+        if(this.plugin.shouldCheckMove(e.getPlayer().getUniqueId()) && e.getFrom().distance(e.getTo())>=0.1)
             this.plugin.stopPlayer(e.getPlayer());
         
     }
