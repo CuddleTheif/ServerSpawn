@@ -1,48 +1,72 @@
+
+# The text used when the player teleports with the /spawn command
 tp-text: '§7Welcome to the spawn!'
+
+# The text used when the player actually uses the /spawn command
 spawn-text: '§7Teleporting to the spawn, stand still...'
+
+# The text used when the player tries to move before the /spawn command teleports them (Remove to allow movement)
 no-move: '§4Teleportation cancelled!'
+
+# The time before the player actually teleports using the /spawn command (In seconds)
 spawn-time: 5
+
+# The time a player must be offline to be moved to the Server spawn when they enter the world (set to 0 for always moved)
 server-time: 900
+
+# The permission for players who get telported instantly when using the /spawn command
 spawn-cooldown-perm: "serverspawn.cooldown"
+
+# If the Respawn should override a player's bed location if set when they die
 respawn-bed-override: false
+
+# The location a player goes when they enter a server after being offline for server-time
 server:
   ==: org.bukkit.Location
-  world: hub
-  x: -61.5
-  y: 70.0
-  z: 6.5
+  world: world
+  x: 0
+  y: 0
+  z: 0
   yaw: 180.41762
   pitch: -0.6275362
+
+# The location a player goes when they use the /spawn command
 command:
   ==: org.bukkit.Location
-  world: hub
-  x: -61.5
-  y: 70.0
-  z: 6.5
+  world: world
+  x: 0
+  y: 0
+  z: 0
   yaw: 180.41762
   pitch: -0.6275362
+
+# The location a player goes when they enter the server for the first time ever
 first:
   ==: org.bukkit.Location
-  world: hub
-  x: -61.5
-  y: 70.0
-  z: 6.5
+  world: world
+  x: 0
+  y: 0
+  z: 0
   yaw: 180.41762
   pitch: -0.6275362
+
+# The location a player goes when they die
 respawn:
   ==: org.bukkit.Location
-  world: hub
-  x: -61.5
-  y: 70.0
-  z: 6.5
+  world: world
+  x: 0
+  y: 0
+  z: 0
   yaw: 180.41762
   pitch: -0.6275362
+
+# The location a player goes when they fall into void in the set world
 void:
   hub:
     ==: org.bukkit.Location
-    world: hub
-    x: -61.5
-    y: 70.0
-    z: 6.5
+    world: world
+    x: 0
+    y: 0
+    z: 0
     yaw: 180.41762
     pitch: -0.6275362
